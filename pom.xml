@@ -2,21 +2,21 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.aooshi.j</groupId>
-	<artifactId>numberserver</artifactId>
-	<version>1.0.0-snapshot</version>
-	<name>j.numberserver</name>
-	<url>http://www.aooshi.org/link?n=org.aooshi.j.numberserver</url>
+	<artifactId>aooshi-j-numberserver</artifactId>
+	<version>1.0.0</version>
+	<name>aooshi-j-numberserver</name>
+	<url>http://www.aooshi.org/link?n=aooshi-j-numberserver</url>
+	
+	<organization>
+		<name>aooshi.org</name>
+		<url>http://www.aooshi.org</url>
+	</organization>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
-	
-	<organization>
-		<url>http://www.aooshi.org</url>
-		<name>Aooshi.org</name>
-	</organization>
 	
 	<packaging>jar</packaging>
 
@@ -59,14 +59,14 @@
 		
 		<dependency>
 			<groupId>org.aooshi.j</groupId>
-			<artifactId>util</artifactId>
-			<version>1.0.0-SNAPSHOT</version>
+			<artifactId>aooshi-j-util</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 	</dependencies>
 	
 	<build>
-		<finalName>${project.artifactId}</finalName>
+		<finalName>${project.artifactId}.${project.version}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
