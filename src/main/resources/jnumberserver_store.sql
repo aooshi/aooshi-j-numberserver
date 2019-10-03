@@ -23,3 +23,17 @@ create table jnumberserver_user
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='数值服务器访问授权';
 
 
+insert into jnumberserver_user set 
+uid = 1,
+pwd = 'BjSfz4WkKbn',
+state = 0,
+createtime=now();
+
+
+insert into jnumberserver_user set 
+uid = 2,
+pwd = '42E3rPjTcetSS',
+state = 0,
+createtime=now();
+
+
