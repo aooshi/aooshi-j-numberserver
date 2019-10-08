@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.aooshi.j.numberserver.service.IStoreService;
 import org.aooshi.j.numberserver.util.ActionCode;
+import org.aooshi.j.numberserver.util.AppV;
 import org.aooshi.j.numberserver.util.ControllerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -25,11 +26,16 @@ public class Home {
 	@Autowired
 	IStoreService service;
 
-	@GetMapping("/")
+	@GetMapping(value = "/", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String index() {
 
-		return "Service ok";
+		//return "Service ok";
+
+		String n = "ID Server";
+		String v = AppV.GetApplicationV(n, "");
+
+		return v;
 	}
 
 
@@ -270,7 +276,7 @@ public class Home {
 	 * @param request
 	 * @param response
 	 * @param id
-	 * @param setp
+	 * @param step
 	 * @param defaultValue
 	 * @return
 	 */
