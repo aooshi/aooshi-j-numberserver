@@ -32,12 +32,22 @@ public class Home {
 
 		//return "Service ok";
 
+		String line = "\r\nDB: OK";
+		try {
+			List<Long> list = service.get(1);
+			if (list == null || list.size() == 0) {
+				line = "\r\nDB: No Found";
+			}
+		} catch (Exception exception) {
+			line = "\r\nDB: Error";
+		}
+
+
 		String n = "ID Server";
-		String v = AppV.GetApplicationV(n, "");
+		String v = AppV.GetApplicationV(n, line);
 
 		return v;
 	}
-
 
 	/**
 	 * POST: 

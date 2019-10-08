@@ -31,10 +31,17 @@ public class BasicAuthorizationFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
+
+
+
 		
 		ServletContext servletContext = request.getServletContext();
 		boolean checkSuccess = check(request,servletContext);
 		if (checkSuccess == true)
+		{
+			chain.doFilter(request, response);
+		}
+		else  if (((HttpServletRequest) request).getRequestURI().equals("/"))
 		{
 			chain.doFilter(request, response);
 		}
