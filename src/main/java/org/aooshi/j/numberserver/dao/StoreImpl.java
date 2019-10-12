@@ -36,14 +36,14 @@ public class StoreImpl implements IStore {
 
     @Override
     public int update(String id, Long value) {
-        jdbcTemplate.update("update jnumberserver_store set v=" + value + " where id=" + id);
+        jdbcTemplate.update("update jnumberserver_store set v=" + value + " where id='" + id + "'");
         return ActionCode.OK;
     }
 
     @Override
     public int delete(String id) {
         int rows = 0;
-        rows = jdbcTemplate.update("delete from jnumberserver_store where id=" + id);
+        rows = jdbcTemplate.update("delete from jnumberserver_store where id='" + id + "'");
         if (rows > 0)
             return ActionCode.OK;
 
@@ -52,7 +52,7 @@ public class StoreImpl implements IStore {
 
     @Override
     public List<Long> get(String id) {
-        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
+        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id='" + id + "' limit 1", Long.class);
         return list;
     }
 
@@ -61,11 +61,11 @@ public class StoreImpl implements IStore {
     public List<Long> increment(String id, Integer step) {
         List<Long> list = null;
 
-        int rows = jdbcTemplate.update("update jnumberserver_store set v=v+" + step + " where id=" + id);
+        int rows = jdbcTemplate.update("update jnumberserver_store set v=v+" + step + " where id='" + id + "'");
         if (rows == 0)
             return list;
 
-        list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
+        list = jdbcTemplate.queryForList("select v from jnumberserver_store where id='" + id + "' limit 1", Long.class);
 
         return list;
     }
@@ -76,11 +76,11 @@ public class StoreImpl implements IStore {
 
         List<Long> list = null;
 
-        int rows = jdbcTemplate.update("update jnumberserver_store set v=v-" + step + " where id=" + id);
+        int rows = jdbcTemplate.update("update jnumberserver_store set v=v-" + step + " where id='" + id + "'");
         if (rows == 0)
             return list;
 
-        list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
+        list = jdbcTemplate.queryForList("select v from jnumberserver_store where id='" + id + "' limit 1", Long.class);
 
         return list;
     }
@@ -90,35 +90,35 @@ public class StoreImpl implements IStore {
     public long incrementOrAdd(String id, Integer step, Long defaultValue) {
 
 
-        int rows = jdbcTemplate.update("update jnumberserver_store set v=v+" + step + " where id=" + id);
+        int rows = jdbcTemplate.update("update jnumberserver_store set v=v+" + step + " where id='" + id + "'");
         if (rows == 0) {
             rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
                     id, defaultValue, new Date());
         }
 
-        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
+        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id='" + id + "' limit 1", Long.class);
         return list.get(0);
     }
 
     @Override
     @Transactional
     public long decrementOrAdd(String id, Integer step, Long defaultValue) {
-        int rows = jdbcTemplate.update("update jnumberserver_store set v=v-" + step + " where id=" + id);
+        int rows = jdbcTemplate.update("update jnumberserver_store set v=v-" + step + " where id='" + id + "'");
         if (rows == 0) {
             rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
                     id, defaultValue, new Date());
         }
 
-        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1 ", Long.class);
+        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id='" + id + "' limit 1 ", Long.class);
         return list.get(0);
     }
 
     @Override
     @Transactional
     public Long getOrAdd(String id, Long defaultValue) {
-        jdbcTemplate.update("update jnumberserver_store set v=v+0 where id=" + id);
+        jdbcTemplate.update("update jnumberserver_store set v=v+0 where id='" + id + "'");
 
-        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
+        List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id='" + id + "' limit 1", Long.class);
 
         if (list == null || list.size() == 0) {
             jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
@@ -129,5 +129,4 @@ public class StoreImpl implements IStore {
             return list.get(0);
         }
     }
-
 }
