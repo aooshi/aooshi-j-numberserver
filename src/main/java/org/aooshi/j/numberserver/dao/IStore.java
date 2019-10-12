@@ -4,78 +4,76 @@ import java.util.List;
 
 public interface IStore {
 
-	/**
-	 *  添加一个标识，如果已存在则将失败
-	 * @param id
-	 * @return
-	 */
-    int add(long id, long value);
     /**
-     *  
+     * 添加一个标识，如果已存在则将失败
+     *
+     * @param id
+     * @return
+     */
+    int add(String id, Long value);
+
+    /**
      * 将一个标识值置换成为新值
+     *
      * @param id
      * @param value
      * @return
      */
-    int update(long id, long value);
-    
+    int update(String id, Long value);
+
     /**
-	 *  
      * 删除一个标识
+     *
      * @param id
      * @return
      */
-    int delete(long id);
+    int delete(String id);
 
     /**
-	 *  
      * 获取一个标识（不会引发标识的值变化）
+     *
      * @param id
      * @return
      */
-    List<Long> get(long id);
+    List<Long> get(String id);
 
     /**
-     * 
-     * @param id
-     * @param step
-     * @return
-     */
-    List<Long> increment(long id,int step);
-
-    /**
-     *  
      * @param id
      * @param step
      * @return
      */
-    List<Long> decrement(long id,int step);
-    
+    List<Long> increment(String id, Integer step);
 
     /**
-	 *  
+     * @param id
+     * @param step
+     * @return
+     */
+    List<Long> decrement(String id, Integer step);
+
+
+    /**
      * 获取一个标识（不会引发标识的值变化）
+     *
      * @param id
      * @param defaultValue
      * @return
      */
-    Long getOrAdd(long id,long defaultValue);
-    
-    /**
-     * 
-     * @param id
-     * @param defaultValue
-     * @param step
-     * @return
-     */
-    long incrementOrAdd(long id,int step,long defaultValue);
+    Long getOrAdd(String id, Long defaultValue);
 
     /**
-     * 
      * @param id
      * @param defaultValue
      * @param step
      * @return
      */
-    long decrementOrAdd(long id,int step,long defaultValue);
+    long incrementOrAdd(String id, Integer step, Long defaultValue);
+
+    /**
+     * @param id
+     * @param defaultValue
+     * @param step
+     * @return
+     */
+    long decrementOrAdd(String id, Integer step, Long defaultValue);
 }

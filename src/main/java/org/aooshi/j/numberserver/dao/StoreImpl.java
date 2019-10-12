@@ -15,129 +15,138 @@ public class StoreImpl implements IStore {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-	
-	@Override
-	public int add(long id, long value) {
-		Date date = new Date();
+
+    @Override
+    public int add(String id, Long value) {
+        Date date = new Date();
         int rows = 0;
-		try
-		{
-			rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
-              id,value,date);
-		}
-		catch(DuplicateKeyException e)
-		{
-			//String message = "id exists";
-			return  ActionCode.ID_EXISTS;
-		}
-		
-		if (rows > 0)
-			return ActionCode.OK;
-		
-		return ActionCode.DB_EXECUTE_FAILURE;
-	}
+        try {
+            Object[] obj = new Object[]{id, value, date};
+            String sql = "insert into jnumberserver_store(id,v,createtime) values(?,?,?)";
+            rows = jdbcTemplate.update(sql, obj);
+        } catch (DuplicateKeyException e) {
+            //String message = "id exists";
+            return ActionCode.ID_EXISTS;
+        }
 
-	@Override
-	public int update(long id, long value) 
-	{
-		jdbcTemplate.update("update jnumberserver_store set v="+ value +" where id=" + id);
-		return ActionCode.OK;
-	}
+        if (rows > 0)
+            return ActionCode.OK;
 
-	@Override
-	public int delete(long id) 
-	{
-		int rows = 0;
-		rows = jdbcTemplate.update("delete from jnumberserver_store where id=" + id);
-		if (rows > 0)
-			return ActionCode.OK;
-		
-		return ActionCode.ID_NOT_EXISTS;
-	}
+        return ActionCode.DB_EXECUTE_FAILURE;
+    }
 
-	@Override
-	public List<Long> get(long id) {
-		List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
-		return list;
-	}
+    @Override
+    public int update(String id, Long value) {
+        Object[] obj = new Object[]{value, id};
+        String sql = "update jnumberserver_store set v=? where id=?";
+        jdbcTemplate.update(sql, obj);
+        return ActionCode.OK;
+    }
 
-	@Override
-	@Transactional
-	public List<Long> increment(long id, int step) {
-		List<Long> list = null;
-		
-		int rows = jdbcTemplate.update("update jnumberserver_store set v=v+"+ step +" where id=" + id);
-		if (rows == 0)
-			return list;
-		
-		list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
-		 
-		return list;
-	}
+    @Override
+    public int delete(String id) {
+        int rows = 0;
+        Object[] obj = new Object[]{id};
+        String sql = "delete from jnumberserver_store where id=?";
+        rows = jdbcTemplate.update(sql, obj);
+        if (rows > 0)
+            return ActionCode.OK;
 
-	@Override
-	@Transactional
-	public List<Long> decrement(long id, int step) {
+        return ActionCode.ID_NOT_EXISTS;
+    }
 
-		List<Long> list = null;
+    @Override
+    public List<Long> get(String id) {
+        Object[] obj = new Object[]{id};
+        String sql = "select v from jnumberserver_store where id=? limit 1";
+        List<Long> list = jdbcTemplate.queryForList(sql, obj, Long.class);
+        return list;
+    }
 
-		int rows = jdbcTemplate.update("update jnumberserver_store set v=v-"+ step +" where id=" + id);
-		if (rows == 0)
-			return list;
-		
-		list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
-		 
-		return list;
-	}
+    @Override
+    @Transactional
+    public List<Long> increment(String id, Integer step) {
+        List<Long> list = null;
+        Object[] obj = new Object[]{step, id};
+        String sql = "update jnumberserver_store set v=v+? where id=?";
+        int rows = jdbcTemplate.update(sql, obj);
+        if (rows == 0)
+            return list;
 
-	@Override
-	@Transactional
-	public long incrementOrAdd(long id, int step, long defaultValue) {
+        Object[] obj1 = new Object[]{id};
+        String sql1 = "select v from jnumberserver_store where id=? limit 1";
+        list = jdbcTemplate.queryForList(sql1, obj1, Long.class);
 
+        return list;
+    }
 
-		int rows = jdbcTemplate.update("update jnumberserver_store set v=v+"+ step +" where id=" + id);
-		if (rows == 0)
-		{
-	        rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
-	              id,defaultValue,new Date());
-		}
-		
-		List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
-		return list.get(0);
-	}
+    @Override
+    @Transactional
+    public List<Long> decrement(String id, Integer step) {
 
-	@Override
-	@Transactional
-	public long decrementOrAdd(long id, int step, long defaultValue) {
-		int rows = jdbcTemplate.update("update jnumberserver_store set v=v-"+ step +" where id=" + id);
-		if (rows == 0)
-		{
-	        rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
-	              id,defaultValue,new Date());
-		}
-		
-		List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1 ", Long.class);
-		return list.get(0);
-	}
+        List<Long> list = null;
+        Object[] obj = new Object[]{step, id};
+        String sql = "update jnumberserver_store set v=v-? where id=?";
+        int rows = jdbcTemplate.update(sql, obj);
+        if (rows == 0)
+            return list;
 
-	@Override
-	@Transactional
-	public Long getOrAdd(long id, long defaultValue) {
-		jdbcTemplate.update("update jnumberserver_store set v=v+0 where id=" + id);
-		
-		List<Long> list = jdbcTemplate.queryForList("select v from jnumberserver_store where id=" + id + " limit 1", Long.class);
+        Object[] obj1 = new Object[]{id};
+        String sql1 = "select v from jnumberserver_store where id=? limit 1";
+        list = jdbcTemplate.queryForList(sql1, obj1, Long.class);
 
-		if (list == null || list.size() == 0)
-		{
-	        jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
-	              id,defaultValue,new Date());
+        return list;
+    }
 
-			return defaultValue;
-		}
-		else
-		{
-			return list.get(0);
-		}
-	}
+    @Override
+    @Transactional
+    public long incrementOrAdd(String id, Integer step, Long defaultValue) {
+        Object[] obj = new Object[]{step, id};
+        String sql = "update jnumberserver_store set v=v+? where id=?";
+        int rows = jdbcTemplate.update(sql, obj);
+        if (rows == 0) {
+            rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
+                    id, defaultValue, new Date());
+        }
+        obj = new Object[]{id};
+        sql = "select v from jnumberserver_store where id=? limit 1";
+        List<Long> list = jdbcTemplate.queryForList(sql, obj, Long.class);
+        return list.get(0);
+    }
 
+    @Override
+    @Transactional
+    public long decrementOrAdd(String id, Integer step, Long defaultValue) {
+        Object[] obj = new Object[]{step, id};
+        String sql = "update jnumberserver_store set v=v-? where id=?";
+        int rows = jdbcTemplate.update(sql, obj);
+        if (rows == 0) {
+            rows = jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
+                    id, defaultValue, new Date());
+        }
+        obj = new Object[]{id};
+        sql = "select v from jnumberserver_store where id=? limit 1 ";
+        List<Long> list = jdbcTemplate.queryForList(sql, obj, Long.class);
+        return list.get(0);
+    }
+
+    @Override
+    @Transactional
+    public Long getOrAdd(String id, Long defaultValue) {
+        Object[] obj = new Object[]{id};
+        String sql = "update jnumberserver_store set v=v+0 where id=?";
+        jdbcTemplate.update(sql, obj);
+
+        String sql1 = "select v from jnumberserver_store where id=? limit 1";
+        List<Long> list = jdbcTemplate.queryForList(sql1, obj, Long.class);
+
+        if (list == null || list.size() == 0) {
+            jdbcTemplate.update("insert into jnumberserver_store(id,v,createtime) values(?,?,?)",
+                    id, defaultValue, new Date());
+
+            return defaultValue;
+        } else {
+            return list.get(0);
+        }
+    }
 }

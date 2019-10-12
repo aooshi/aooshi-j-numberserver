@@ -13,47 +13,47 @@ public class StoreServiceImpl implements IStoreService {
     IStore store;
 	
 	@Override
-	public int add(long id, long value) {
+	public int add(String id, Long value) {
 		return store.add(id, value);
 	}
 
 	@Override
-	public int update(long id, long value) {
+	public int update(String id, Long value) {
 		return store.update(id, value);
 	}
 
 	@Override
-	public int delete(long id) {
+	public int delete(String id) {
 		return store.delete(id);
 	}
 
 	@Override
-	public List<Long> get(long id) {
+	public List<Long> get(String id) {
 		return store.get(id);
 	}
 	
 	@Override
-	public List<Long> increment(long id, int step) {
+	public List<Long> increment(String id, Integer step) {
 		return store.increment(id, step);
 	}
 
 	@Override
-	public List<Long> decrement(long id, int step) {
+	public List<Long> decrement(String id, Integer step) {
 		return store.decrement(id, step);
 	}
 
 	@Override
-	public long incrementOrAdd(long id, int step, long defaultValue) {
+	public long incrementOrAdd(String id, Integer step, Long defaultValue) {
 		return store.incrementOrAdd(id, step, defaultValue);
 	}
 
 	@Override
-	public long decrementOrAdd(long id, int step, long defaultValue) {
+	public long decrementOrAdd(String id, Integer step, Long defaultValue) {
 		return store.decrementOrAdd(id, step, defaultValue);
 	}
 
 	@Override
-	public Long getOrAdd(long id, long defaultValue) {
+	public Long getOrAdd(String id, Long defaultValue) {
 		return store.getOrAdd(id,defaultValue);
 	}
 
