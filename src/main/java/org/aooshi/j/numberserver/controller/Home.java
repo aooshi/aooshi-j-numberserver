@@ -34,7 +34,7 @@ public class Home {
 
 		String line = "\r\nDB: OK";
 		try {
-			List<Long> list = service.get(1);
+			List<Long> list = service.get("1");
 			if (list == null || list.size() == 0) {
 				line = "\r\nDB: No Found";
 			}
@@ -48,6 +48,7 @@ public class Home {
 
 		return v;
 	}
+
 
 	/**
 	 * POST: 
@@ -66,8 +67,8 @@ public class Home {
 	@ResponseBody
 	@PostMapping("/add")
 	public String add(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "value") long value) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "value") Long value) {
 
 		int actionCode = service.add(id, value);
 		if (actionCode == ActionCode.OK)
@@ -104,8 +105,8 @@ public class Home {
 	@ResponseBody
 	@PostMapping("/update")
 	public String update(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "value") long value) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "value") Long value) {
 
 		int actionCode = service.update(id, value);
 		if (actionCode == ActionCode.OK)
@@ -131,7 +132,7 @@ public class Home {
 	@ResponseBody
 	@PostMapping("/delete")
 	public String delete(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id) {
+			,@RequestParam(name = "id") String id) {
 
 		int actionCode = service.delete(id);
 		if (actionCode == ActionCode.OK)
@@ -160,7 +161,7 @@ public class Home {
 	@ResponseBody
 	@GetMapping("/get")
 	public String get(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id) {
+			,@RequestParam(name = "id") String id) {
 
 		List<Long> list = service.get(id);
 		if (list == null || list.size() == 0)
@@ -185,8 +186,8 @@ public class Home {
 	@ResponseBody
 	@GetMapping("/increment")
 	public String increment(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "step") int step) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "step") Integer step) {
 
 		List<Long> list = service.increment(id, step);
 		if (list == null || list.size() == 0)
@@ -216,8 +217,8 @@ public class Home {
 	@ResponseBody
 	@GetMapping("/decrement")
 	public String decrement(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "step") int step) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "step") Integer step) {
 
 		List<Long> list = service.decrement(id, step);
 		if (list == null || list.size() == 0)
@@ -245,8 +246,8 @@ public class Home {
 	@ResponseBody
 	@GetMapping("/getOrAdd")
 	public String getOrAdd(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "default") long defaultValue) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "default") Long defaultValue) {
 
 		Long v1 = service.getOrAdd(id, defaultValue);	
 
@@ -269,9 +270,9 @@ public class Home {
 	@ResponseBody
 	@GetMapping("/incrementOrAdd")
 	public String incrementOrAdd(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "step") int step
-			,@RequestParam(name = "default") long defaultValue) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "step") Integer step
+			,@RequestParam(name = "default") Long defaultValue) {
 
 		Long v1 = service.incrementOrAdd(id, step, defaultValue);	
 
@@ -293,9 +294,9 @@ public class Home {
 	@ResponseBody
 	@GetMapping("/decrementOrAdd")
 	public String decrementOrAdd(HttpServletRequest request,HttpServletResponse response
-			,@RequestParam(name = "id") long id
-			,@RequestParam(name = "step") int step
-			,@RequestParam(name = "default") long defaultValue) {
+			,@RequestParam(name = "id") String id
+			,@RequestParam(name = "step") Integer step
+			,@RequestParam(name = "default") Long defaultValue) {
 
 		Long v1 = service.decrementOrAdd(id, step, defaultValue);	
 
