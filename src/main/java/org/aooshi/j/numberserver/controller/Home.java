@@ -6,9 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.aooshi.j.numberserver.service.IStoreService;
-import org.aooshi.j.numberserver.util.ActionCode;
-import org.aooshi.j.numberserver.util.AppV;
-import org.aooshi.j.numberserver.util.ControllerUtils;
+import org.aooshi.j.numberserver.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,14 +22,13 @@ public class Home {
 	private final static String SUCCESS = "ok";
 	
 	@Autowired
-	IStoreService service;
+	private IStoreService service;
 
 	@GetMapping(value = "/", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String index() {
 
 		//return "Service ok";
-
 		String line = "\r\nDB: OK";
 		try {
 			List<Long> list = service.get("1");
@@ -41,6 +38,10 @@ public class Home {
 		} catch (Exception exception) {
 			line = "\r\nDB: Error";
 		}
+
+
+		line += "\r\nSnowFlake.DataCenter: " + SnowFlake.instance.getConfiguration().getDataCenterId();
+		line += "\r\nSnowFlake.Matchine: " + SnowFlake.instance.getConfiguration().getMachineId();
 
 
 		String n = "ID Server";
@@ -302,5 +303,18 @@ public class Home {
 
 		String idstr = v1.toString();
 		return idstr;
+	}
+
+	/**
+	 * GET:
+	 * 	URL:   /snowflake
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/snowflake")
+	public String snowflake(HttpServletRequest request,HttpServletResponse response) {
+		long id = SnowFlake.instance.nextId();
+		return "" + id;
 	}
 }
