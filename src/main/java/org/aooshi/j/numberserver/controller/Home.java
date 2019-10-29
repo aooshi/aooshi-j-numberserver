@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+//import org.aooshi.j.numberserver.client.NumberServerClient;
 import org.aooshi.j.numberserver.service.IStoreService;
 import org.aooshi.j.numberserver.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +25,13 @@ public class Home {
 	@Autowired
 	private IStoreService service;
 
+//	@Autowired
+//	private NumberServerClient client;
+
 	@GetMapping(value = "/", produces = "text/plain;charset=UTF-8")
 	@ResponseBody
 	public String index() {
+
 
 		//return "Service ok";
 		String line = "\r\nDB: OK";
@@ -42,6 +47,11 @@ public class Home {
 
 		line += "\r\nSnowFlake.DataCenter: " + SnowFlake.instance.getConfiguration().getDataCenterId();
 		line += "\r\nSnowFlake.Matchine: " + SnowFlake.instance.getConfiguration().getMachineId();
+
+//		for(int i=0;i<10;i++) {
+//			Long snowflakeId = this.client.snowflake();
+//			line += "\r\nSnowFlake.ID: " + snowflakeId;
+//		}
 
 
 		String n = "ID Server";
