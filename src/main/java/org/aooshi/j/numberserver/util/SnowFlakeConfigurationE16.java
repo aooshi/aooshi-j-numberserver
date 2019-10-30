@@ -8,30 +8,31 @@ import java.io.IOException;
 import java.util.Properties;
 
 @Component
-public class SnowFlakeConfiguration implements ISnowFlakeConfiguration {
+public class SnowFlakeConfigurationE16 implements ISnowFlakeConfiguration {
 
 
-	@Value("${SnowFlake.DataCenterId}")
-	private long dataCenterId;
-	@Value("${SnowFlake.MachineId}")
+	@Value("${SnowFlake16.MachineId}")
 	private long machineId;
-	@Value("${SnowFlake.StartStamp}")
+	@Value("${SnowFlake16.StartStamp}")
 	private long startStamp;
 
 
-	public long getDataCenterId() {
-		return dataCenterId;
-	}
-
+	@Override
 	public long getMachineId() {
 		return machineId;
 	}
 
+	@Override
 	public long getStartStamp() {
 		return startStamp;
 	}
 
-	public SnowFlakeConfiguration()
+	@Override
+	public long getDataCenterId() {
+		return -1;
+	}
+
+	public SnowFlakeConfigurationE16()
 	{	
 		 Properties props = null;
 		 
@@ -46,9 +47,8 @@ public class SnowFlakeConfiguration implements ISnowFlakeConfiguration {
 		 
 		 if (props != null)
 		 {
-			 this.dataCenterId  = Long.parseLong(props.getProperty("SnowFlake.DataCenterId"));
-			 this.machineId  =  Long.parseLong(props.getProperty("SnowFlake.MachineId"));
-			 this.startStamp  =  Long.parseLong(props.getProperty("SnowFlake.StartStamp"));
+			 this.machineId  =  Long.parseLong(props.getProperty("SnowFlake16.MachineId"));
+			 this.startStamp  =  Long.parseLong(props.getProperty("SnowFlake16.StartStamp"));
 		 }
 	}
 }

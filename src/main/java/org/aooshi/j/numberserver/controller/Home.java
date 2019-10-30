@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 //import org.aooshi.j.numberserver.client.NumberServerClient;
 import org.aooshi.j.numberserver.service.IStoreService;
+import org.aooshi.j.numberserver.service.SnowFlakeEService;
 import org.aooshi.j.numberserver.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -25,6 +26,8 @@ public class Home {
 	@Autowired
 	private IStoreService service;
 
+	private final SnowFlakeEService snowFlakeE = new SnowFlakeEService();
+
 //	@Autowired
 //	private NumberServerClient client;
 
@@ -32,8 +35,6 @@ public class Home {
 	@ResponseBody
 	public String index() {
 
-
-		//return "Service ok";
 		String line = "\r\nDB: OK";
 		try {
 			List<Long> list = service.get("1");
@@ -44,16 +45,27 @@ public class Home {
 			line = "\r\nDB: Error";
 		}
 
-
+		line += "\r\n--";
 		line += "\r\nSnowFlake.DataCenter: " + SnowFlake.instance.getConfiguration().getDataCenterId();
 		line += "\r\nSnowFlake.Matchine: " + SnowFlake.instance.getConfiguration().getMachineId();
+
+		line += "\r\n--";
+		line += "\r\nSnowFlakeE  .Matchine: " + this.snowFlakeE.getSnowFlakeE().getConfiguration().getMachineId();
+		line += "\r\nSnowFlakeE15.Matchine: " + this.snowFlakeE.getSnowFlakeE15().getConfiguration().getMachineId();
+		line += "\r\nSnowFlakeE16.Matchine: " + this.snowFlakeE.getSnowFlakeE16().getConfiguration().getMachineId();
+
 
 //		for(int i=0;i<10;i++) {
 //			Long snowflakeId = this.client.snowflake();
 //			line += "\r\nSnowFlake.ID: " + snowflakeId;
 //		}
 
+//		line += "\r\n--";
+//		line += "\r\nSnowFlakeE  .ID: " + this.snowFlakeE.getSnowFlakeE().nextId();
+//		line += "\r\nSnowFlakeE15.ID: " + this.snowFlakeE.getSnowFlakeE15().nextId();
+//		line += "\r\nSnowFlakeE16.ID: " + this.snowFlakeE.getSnowFlakeE16().nextId();
 
+		line += "\r\n--";
 		String n = "ID Server";
 		String v = AppV.GetApplicationV(n, line);
 
@@ -325,6 +337,45 @@ public class Home {
 	@GetMapping("/snowflake")
 	public String snowflake(HttpServletRequest request,HttpServletResponse response) {
 		long id = SnowFlake.instance.nextId();
+		return "" + id;
+	}
+
+	/**
+	 * GET:
+	 * 	URL:   /snowflake0
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/snowflake0")
+	public String snowflake0(HttpServletRequest request,HttpServletResponse response) {
+		long id = this.snowFlakeE.getSnowFlakeE().nextId();
+		return "" + id;
+	}
+
+	/**
+	 * GET:
+	 * 	URL:   /snowflake15
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/snowflake15")
+	public String snowflake15(HttpServletRequest request,HttpServletResponse response) {
+		long id = this.snowFlakeE.getSnowFlakeE15().nextId();
+		return "" + id;
+	}
+
+	/**
+	 * GET:
+	 * 	URL:   /snowflake16
+	 *
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("/snowflake16")
+	public String snowflake16(HttpServletRequest request,HttpServletResponse response) {
+		long id = this.snowFlakeE.getSnowFlakeE16().nextId();
 		return "" + id;
 	}
 }
