@@ -50,7 +50,6 @@ public class Home {
 		line += "\r\nSnowFlake.Matchine: " + SnowFlake.instance.getConfiguration().getMachineId();
 
 		line += "\r\n--";
-		line += "\r\nSnowFlakeE  .Matchine: " + this.snowFlakeE.getSnowFlakeE().getConfiguration().getMachineId();
 		line += "\r\nSnowFlakeE15.Matchine: " + this.snowFlakeE.getSnowFlakeE15().getConfiguration().getMachineId();
 		line += "\r\nSnowFlakeE16.Matchine: " + this.snowFlakeE.getSnowFlakeE16().getConfiguration().getMachineId();
 
@@ -337,19 +336,6 @@ public class Home {
 	@GetMapping("/snowflake")
 	public String snowflake(HttpServletRequest request,HttpServletResponse response) {
 		long id = SnowFlake.instance.nextId();
-		return "" + id;
-	}
-
-	/**
-	 * GET:
-	 * 	URL:   /snowflake0
-	 *
-	 * @return
-	 */
-	@ResponseBody
-	@GetMapping("/snowflake0")
-	public String snowflake0(HttpServletRequest request,HttpServletResponse response) {
-		long id = this.snowFlakeE.getSnowFlakeE().nextId();
 		return "" + id;
 	}
 

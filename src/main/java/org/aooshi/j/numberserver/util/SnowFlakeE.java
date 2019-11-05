@@ -101,7 +101,7 @@ public class SnowFlakeE {
     public static void main(String[] args) throws InterruptedException {
         //SnowFlake snowFlake = new SnowFlake(1, 1);
 
-        SnowFlakeConfigurationE snowFlakeConfigurationE = new SnowFlakeConfigurationE();
+        ISnowFlakeConfiguration snowFlakeConfigurationE = new SnowFlakeConfigurationE15();
 
         SnowFlakeE snowFlake = new SnowFlakeE(snowFlakeConfigurationE);
 
