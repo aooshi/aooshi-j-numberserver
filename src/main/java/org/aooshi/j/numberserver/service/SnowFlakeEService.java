@@ -4,17 +4,8 @@ import org.aooshi.j.numberserver.util.*;
 
 public class SnowFlakeEService {
 
-    private SnowFlakeE snowFlakeE = null;
     private SnowFlakeE snowFlakeE16 = null;
     private SnowFlakeE snowFlakeE15 = null;
-
-    public SnowFlakeE getSnowFlakeE() {
-        if (this.snowFlakeE == null) {
-            ISnowFlakeConfiguration snowFlakeConfigurationE = SpringContextUtils.getBean(SnowFlakeConfigurationE.class);
-            this.snowFlakeE = new SnowFlakeE(snowFlakeConfigurationE);
-        }
-        return snowFlakeE;
-    }
 
     public SnowFlakeE getSnowFlakeE16() {
         if (this.snowFlakeE16 == null) {
